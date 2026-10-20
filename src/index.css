@@ -1,0 +1,830 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-jp: 'Chakra Petch', sans-serif;
+    --font-cyber: 'Chakra Petch', sans-serif;
+    --font-hud: 'Rajdhani', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #020406;
+    color: #d6f8ff;
+    font-family: var(--font-cyber), var(--font-jp), sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+#tokaido-map,
+#prize-bays {
+  scroll-margin-top: 18px;
+}
+
+/* Custom Cyber Grid & Scanline Backgrounds */
+.cyber-grid-bg {
+  background-color: #061117;
+  background-image: 
+    linear-gradient(to right, rgba(76, 224, 210, 0.065) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(76, 224, 210, 0.065) 1px, transparent 1px),
+    radial-gradient(circle at 50% 0%, rgba(76, 224, 210, 0.16) 0%, transparent 70%);
+  background-size: 20px 20px, 20px 20px, 100% 100%;
+}
+
+.cyber-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.28) 3px,
+    rgba(0, 0, 0, 0.28) 4px
+  );
+}
+
+/* Chamfered Clip Paths for HUD Modules */
+.clip-hud-frame {
+  clip-path: polygon(
+    24px 0%,
+    calc(100% - 24px) 0%,
+    100% 24px,
+    100% calc(100% - 24px),
+    calc(100% - 24px) 100%,
+    24px 100%,
+    0% calc(100% - 24px),
+    0% 24px
+  );
+}
+
+.clip-hud-tab {
+  clip-path: polygon(
+    6px 0%,
+    calc(100% - 6px) 0%,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0% calc(100% - 6px),
+    0% 6px
+  );
+}
+
+.clip-capsule {
+  clip-path: polygon(
+    10px 0%,
+    calc(100% - 10px) 0%,
+    100% 10px,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    10px 100%,
+    0% calc(100% - 10px),
+    0% 10px
+  );
+}
+
+.clip-valance {
+  clip-path: polygon(
+    18px 0%,
+    calc(100% - 18px) 0%,
+    100% 18px,
+    calc(100% - 28px) 100%,
+    28px 100%,
+    0% 18px
+  );
+}
+
+/* =========================================================
+   CYBERPUNK TEXT ANIMATIONS
+   ========================================================= */
+
+@keyframes cyberCharWave {
+  0%, 100% {
+    transform: translateY(0px);
+    text-shadow: 0 0 6px rgba(92, 239, 226, 0.35);
+    color: #e6fcff;
+  }
+  50% {
+    transform: translateY(-1.5px);
+    text-shadow: 0 0 8px rgba(155, 255, 246, 0.5);
+    color: #ffffff;
+  }
+}
+
+.animate-cyber-char-wave {
+  animation: cyberCharWave 2.8s ease-in-out infinite;
+}
+
+/* Sweeping Neon Shimmer Text */
+@keyframes neonTextShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.text-neon-shimmer-cyan {
+  background: linear-gradient(
+    90deg,
+    #dffaff 0%,
+    #7df9ff 25%,
+    #ffffff 50%,
+    #ff9ebb 75%,
+    #dffaff 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: neonTextShimmer 4.5s linear infinite;
+}
+
+/* Neon Pink Glitch & Pulse for Points Readout (-5,000) */
+@keyframes neonPinkFlickerPulse {
+  0%, 100% {
+    color: #ff85a0;
+    text-shadow: 0 0 6px rgba(255, 77, 121, 0.4);
+  }
+  50% {
+    color: #ffb0c0;
+    text-shadow: 0 0 8px rgba(255, 77, 121, 0.55);
+  }
+}
+
+.animate-neon-pink-glitch {
+  animation: neonPinkFlickerPulse 4.2s infinite;
+}
+
+/* Cyan HUD Text Breathing Pulse */
+@keyframes cyanTextPulse {
+  0%, 100% { text-shadow: 0 0 4px rgba(92, 239, 226, 0.3); }
+  50% { text-shadow: 0 0 7px rgba(92, 239, 226, 0.45); }
+}
+
+.animate-cyan-text-pulse {
+  animation: cyanTextPulse 2.6s ease-in-out infinite;
+}
+
+/* Infinity Symbol Pulse */
+@keyframes infinityGlowSpin {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 0 0 4px rgba(92, 239, 226, 0.45);
+    color: #e8fdff;
+  }
+  50% {
+    transform: scale(1.08);
+    text-shadow: 0 0 6px rgba(92, 239, 226, 0.6);
+    color: #ffffff;
+  }
+}
+
+.animate-infinity-glow {
+  display: inline-block;
+  animation: infinityGlowSpin 2.4s ease-in-out infinite;
+}
+
+/* Staggered Attract-Mode Text Wave for Shelf Redeem Buttons */
+@keyframes redeemBtnTextWave {
+  0%, 100% {
+    text-shadow: 0 0 4px rgba(92, 239, 226, 0.3);
+    letter-spacing: 0.08em;
+  }
+  50% {
+    text-shadow: 0 0 6px rgba(92, 239, 226, 0.5);
+    letter-spacing: 0.1em;
+  }
+}
+
+.animate-redeem-text-1 {
+  animation: redeemBtnTextWave 2.7s ease-in-out infinite 0s;
+}
+.animate-redeem-text-2 {
+  animation: redeemBtnTextWave 2.7s ease-in-out infinite 0.45s;
+}
+.animate-redeem-text-3 {
+  animation: redeemBtnTextWave 2.7s ease-in-out infinite 0.9s;
+}
+
+/* Barcode Telemetry Marquee Pulse */
+@keyframes telemetryBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.82; }
+}
+
+.animate-telemetry-blink {
+  animation: telemetryBlink 2s ease-in-out infinite;
+}
+
+/* =========================================================
+   NEON LIGHT BORDER & LINE SYSTEM (#e30613 RED)
+   ========================================================= */
+
+/* SVG Neon Tube Drop-Shadow Filters — signature #e30613 red glow */
+.neon-svg-cyan,
+.neon-svg-pink,
+.neon-svg-dual,
+.neon-svg-red {
+  filter:
+    drop-shadow(0 0 2px rgba(227, 6, 19, 0.95))
+    drop-shadow(0 0 6px rgba(227, 6, 19, 0.65))
+    drop-shadow(0 0 12px rgba(227, 6, 19, 0.4));
+}
+
+/* Outer Hero Console Frame with #e30613 border and glow */
+.neon-console-outer {
+  border: 2px solid #e30613;
+  box-shadow:
+    0 0 16px rgba(227, 6, 19, 0.6),
+    0 0 32px rgba(227, 6, 19, 0.3),
+    0 12px 32px rgba(0, 0, 0, 0.85);
+}
+
+.neon-console-inner {
+  border: 1.5px solid #e30613;
+  box-shadow:
+    inset 0 0 14px rgba(227, 6, 19, 0.25),
+    0 0 8px rgba(227, 6, 19, 0.4);
+}
+
+/* Outer Mech Bay Frame with #e30613 border and glow */
+.neon-bay-outer {
+  border: 2px solid #e30613;
+  box-shadow:
+    0 0 18px rgba(227, 6, 19, 0.6),
+    0 0 36px rgba(227, 6, 19, 0.28),
+    0 16px 40px rgba(0, 0, 0, 0.9);
+}
+
+.neon-bay-inner {
+  border: 1.5px solid #e30613;
+  box-shadow:
+    inset 0 0 18px rgba(227, 6, 19, 0.2),
+    0 0 10px rgba(227, 6, 19, 0.35);
+}
+
+/* Hero Banner Viewport Border */
+.neon-hero-viewport {
+  border: 1.5px solid #e30613;
+  box-shadow:
+    0 0 10px rgba(227, 6, 19, 0.55),
+    inset 0 0 20px rgba(227, 6, 19, 0.3);
+}
+
+/* Shelf Row Borders with #e30613 */
+.neon-shelf-cool,
+.neon-shelf-warm {
+  border: 1.5px solid #e30613;
+  box-shadow:
+    0 0 10px rgba(227, 6, 19, 0.45),
+    0 0 20px rgba(227, 6, 19, 0.2),
+    inset 0 0 14px rgba(227, 6, 19, 0.18);
+}
+
+/* Collectible Card Frame with #e30613 border and glow */
+.neon-card-frame {
+  border: 1.5px solid #e30613;
+  box-shadow:
+    0 0 8px rgba(227, 6, 19, 0.45),
+    inset 0 0 6px rgba(227, 6, 19, 0.25);
+}
+
+.prize-card-wrapper:hover .neon-card-frame {
+  border-color: #ff3340;
+  box-shadow:
+    0 0 16px rgba(227, 6, 19, 0.85),
+    0 0 28px rgba(227, 6, 19, 0.45),
+    inset 0 0 10px rgba(227, 6, 19, 0.5);
+}
+
+.neon-card-frame-selected {
+  border: 2px solid #ff4d58;
+  box-shadow:
+    0 0 18px rgba(227, 6, 19, 0.95),
+    0 0 32px rgba(227, 6, 19, 0.6),
+    inset 0 0 10px rgba(227, 6, 19, 0.6);
+}
+
+/* Telemetry Module Boxes with #e30613 */
+.neon-module-cyan,
+.neon-module-gold {
+  border: 1.5px solid #e30613;
+  box-shadow:
+    0 0 10px rgba(227, 6, 19, 0.5),
+    inset 0 0 8px rgba(227, 6, 19, 0.25);
+}
+
+/* Hairline Dividers with #e30613 red glow */
+.neon-line-cyan,
+.neon-line-pink,
+.neon-line-red {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(227, 6, 19, 0.4) 15%,
+    #e30613 50%,
+    rgba(227, 6, 19, 0.4) 85%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 8px rgba(227, 6, 19, 0.75),
+    0 0 16px rgba(227, 6, 19, 0.4);
+}
+
+/* Segmented Neon Pink Progress Fill */
+.pink-led-segments {
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.35) 0px,
+      rgba(255, 255, 255, 0.35) 2px,
+      transparent 2px,
+      transparent 5px
+    ),
+    linear-gradient(180deg, #ff9ebb 0%, #ff4d79 50%, #d92658 100%);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+/* Neon REDEM Button */
+.redem-main-btn {
+  background: linear-gradient(180deg, #ff8da3 0%, #ff5c7c 48%, #e83e62 100%);
+  border: 1px solid rgba(255, 220, 230, 0.7);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7),
+    inset 0 -2px 4px rgba(130, 10, 40, 0.55);
+}
+
+.redem-main-btn:hover {
+  background: linear-gradient(180deg, #ffa3b5 0%, #ff6e8b 48%, #f24a6e 100%);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.5),
+    inset 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+/* Shelf Redeem Action Pill Buttons with #e30613 Red Border & Glow */
+.shelf-redeem-btn {
+  background: linear-gradient(180deg, rgba(26, 8, 12, 0.95) 0%, rgba(14, 3, 5, 0.98) 100%);
+  border: 1.5px solid #e30613;
+  box-shadow:
+    0 0 8px rgba(227, 6, 19, 0.35),
+    inset 0 1px 0 rgba(255, 120, 130, 0.25),
+    0 2px 6px rgba(0, 0, 0, 0.4);
+  transition: all 0.18s ease;
+}
+
+.shelf-redeem-btn:hover {
+  background: linear-gradient(180deg, rgba(42, 12, 18, 0.98) 0%, rgba(22, 5, 8, 0.99) 100%);
+  border-color: #ff3340;
+  box-shadow:
+    0 0 14px rgba(227, 6, 19, 0.7),
+    0 0 24px rgba(227, 6, 19, 0.35),
+    inset 0 1px 0 rgba(255, 180, 190, 0.45),
+    0 4px 10px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.shelf-redeem-btn:active {
+  transform: translateY(0px) scale(0.98);
+}
+
+/* Gift display surfaces stay pure black across shelves, previews, and the vault. */
+.prize-display-card {
+  background-color: #000000;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.65);
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.prize-card-wrapper:hover .prize-display-card {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.75);
+}
+
+/* Subtle Floating Animation for Coin Bursts */
+@keyframes floatUpFade {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-48px) scale(1.15);
+  }
+}
+
+.animate-float-up {
+  animation: floatUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Large level-select map: playful arcade tokens over illustrated Japan. */
+.journey-shell {
+  border: 1.5px solid #e30613;
+  box-shadow:
+    0 0 16px rgba(227, 6, 19, 0.4),
+    0 18px 48px rgba(0, 0, 0, 0.65);
+}
+
+.journey-map-stage {
+  height: 990px;
+  isolation: isolate;
+}
+
+.journey-map-art {
+  opacity: 0.94;
+  filter: saturate(1.07) contrast(1.04);
+  transform: scale(1.04);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.journey-map-stage.is-visible .journey-map-art {
+  transform: scale(1);
+}
+
+.journey-map-shade {
+  background:
+    linear-gradient(180deg, rgba(2, 11, 17, 0.38), transparent 28%, transparent 72%, rgba(2, 11, 17, 0.44)),
+    linear-gradient(90deg, rgba(2, 10, 15, 0.15), transparent 50%, rgba(2, 10, 15, 0.1));
+}
+
+.journey-map-fade {
+  background: linear-gradient(0deg, rgba(5, 19, 26, 0.4), transparent);
+}
+
+.journey-map-hint {
+  padding: 9px 12px;
+  background: rgba(14, 4, 6, 0.88);
+  border: 1px solid #e30613;
+  box-shadow: 0 0 8px rgba(227, 6, 19, 0.4);
+  border-radius: 6px;
+  backdrop-filter: blur(8px);
+}
+
+.journey-trail {
+  z-index: 1;
+  overflow: visible;
+}
+
+.journey-trail path {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.journey-trail-shadow {
+  stroke: rgba(4, 20, 26, 0.82);
+  stroke-width: 20px;
+}
+
+.journey-trail-base {
+  stroke: #e2bd9f;
+  stroke-width: 10px;
+  opacity: 0.84;
+}
+
+.journey-trail-stitches {
+  stroke: rgba(255, 250, 231, 0.9);
+  stroke-width: 2px;
+  stroke-dasharray: 2 16;
+}
+
+.journey-trail-completed,
+.journey-trail-progress {
+  stroke: #ff8198;
+  stroke-width: 10px;
+}
+
+.journey-trail-completed {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+.journey-map-stage.is-visible .journey-trail-completed {
+  animation: journeyDrawTrail 1.1s 0.2s ease-out forwards;
+}
+
+@keyframes journeyDrawTrail {
+  to { stroke-dashoffset: 0; }
+}
+
+.journey-level-button {
+  position: absolute;
+  left: var(--mobile-x);
+  top: var(--mobile-y);
+  z-index: 3;
+  width: 70px;
+  height: 70px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 180ms ease;
+}
+
+.journey-level-button:hover,
+.journey-level-button:focus-visible {
+  z-index: 5;
+  transform: translate(-50%, -50%) scale(1.09);
+}
+
+.journey-level-button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 7px;
+  border-radius: 50%;
+}
+
+.journey-map-stage.is-visible .journey-level-button {
+  animation: journeyLevelArrive 440ms cubic-bezier(0.2, 1.3, 0.3, 1) backwards;
+  animation-delay: var(--level-delay);
+}
+
+@keyframes journeyLevelArrive {
+  from { opacity: 0; transform: translate(-50%, -34%) scale(0.55); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.journey-level-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #a4edf0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 25%, #9cfaec, #35b9b5 55%, #15717b 100%);
+  box-shadow:
+    0 7px 0 #06444b,
+    0 11px 17px rgba(0, 0, 0, 0.6),
+    inset 0 3px 3px rgba(255, 255, 255, 0.5),
+    inset 0 -7px 6px rgba(0, 38, 47, 0.28);
+}
+
+.journey-level-face::before {
+  content: '';
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 9%;
+  height: 21%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.34);
+  filter: blur(3px);
+}
+
+.journey-level-number {
+  position: relative;
+  top: -1px;
+  color: #f5feff;
+  font-family: var(--font-cyber);
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  text-shadow: 0 2px 1px rgba(0, 35, 43, 0.7);
+}
+
+.journey-level-icon {
+  position: absolute;
+  right: -5px;
+  bottom: -2px;
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border: 2px solid #9be8e9;
+  border-radius: 50%;
+  background: #0d3540;
+  color: #ffe59a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.45);
+}
+
+.journey-level-button.is-current {
+  z-index: 4;
+}
+
+.journey-level-button.is-current::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 2px solid rgba(255, 186, 200, 0.7);
+  border-radius: 50%;
+  animation: journeyCurrentRing 2.8s ease-in-out infinite;
+}
+
+@keyframes journeyCurrentRing {
+  0%, 100% { opacity: 0.45; transform: scale(0.96); }
+  50% { opacity: 0.95; transform: scale(1.06); }
+}
+
+.journey-level-button.is-current .journey-level-face {
+  border-color: #ffe6ea;
+  background: radial-gradient(circle at 35% 25%, #ffc2c9, #ff728c 52%, #cb315d 100%);
+  box-shadow:
+    0 7px 0 #822645,
+    0 12px 18px rgba(0, 0, 0, 0.62),
+    inset 0 3px 4px rgba(255, 255, 255, 0.55),
+    inset 0 -6px 6px rgba(93, 0, 27, 0.22);
+}
+
+.journey-level-icon-current {
+  border-color: #ffe1e7;
+  background: #aa3152;
+  color: #fff;
+}
+
+.journey-you-tag {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 12px);
+  transform: translateX(-50%);
+  padding: 3px 9px;
+  border-radius: 4px;
+  background: #ff7089;
+  color: #230a13;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+}
+
+.journey-level-button.is-next .journey-level-face {
+  border-color: #ffedbd;
+  background: radial-gradient(circle at 35% 25%, #fff2c5, #eab765 55%, #ac6644 100%);
+  box-shadow:
+    0 7px 0 #70442e,
+    0 11px 17px rgba(0, 0, 0, 0.6),
+    inset 0 3px 3px rgba(255, 255, 255, 0.55),
+    inset 0 -7px 6px rgba(93, 52, 21, 0.23);
+}
+
+.journey-level-button.is-next .journey-level-number {
+  color: #392315;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.journey-level-button.is-locked .journey-level-face {
+  border-color: #90a3a6;
+  background: radial-gradient(circle at 35% 25%, #718f96, #3b5864 58%, #233842 100%);
+  box-shadow:
+    0 7px 0 #142831,
+    0 11px 17px rgba(0, 0, 0, 0.65),
+    inset 0 3px 3px rgba(255, 255, 255, 0.28),
+    inset 0 -7px 6px rgba(3, 17, 23, 0.25);
+}
+
+/* Muted variations make future stops feel like a game world, not disabled UI. */
+.journey-level-button.is-locked:nth-of-type(3n + 1) .journey-level-face {
+  border-color: #b9afc9;
+  background: radial-gradient(circle at 35% 25%, #aa9ebf, #706382 58%, #453b57 100%);
+  box-shadow: 0 7px 0 #30283f, 0 11px 17px rgba(0, 0, 0, 0.65), inset 0 3px 3px rgba(255, 255, 255, 0.3);
+}
+
+.journey-level-button.is-locked:nth-of-type(3n + 2) .journey-level-face {
+  border-color: #b8c9b8;
+  background: radial-gradient(circle at 35% 25%, #acc9a9, #64867b 58%, #365a58 100%);
+  box-shadow: 0 7px 0 #254342, 0 11px 17px rgba(0, 0, 0, 0.65), inset 0 3px 3px rgba(255, 255, 255, 0.3);
+}
+
+.journey-level-button.is-locked:nth-of-type(3n) .journey-level-face {
+  border-color: #ccb4ad;
+  background: radial-gradient(circle at 35% 25%, #c9a69e, #896662 58%, #573f49 100%);
+  box-shadow: 0 7px 0 #402f3a, 0 11px 17px rgba(0, 0, 0, 0.65), inset 0 3px 3px rgba(255, 255, 255, 0.3);
+}
+
+.journey-level-icon-locked {
+  border-color: #81989f;
+  background: #263d47;
+  color: #d9edf0;
+}
+
+.journey-level-label {
+  position: absolute;
+  top: calc(100% + 11px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  min-width: 92px;
+  padding: 6px 9px;
+  border: 1px solid #e30613;
+  box-shadow: 0 0 8px rgba(227, 6, 19, 0.4), 0 3px 8px rgba(0, 0, 0, 0.42);
+  border-radius: 5px;
+  background: rgba(14, 4, 6, 0.94);
+  color: #ecfdff;
+  font-family: var(--font-hud);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.journey-level-button.is-current .journey-level-label {
+  border-color: #ff4d58;
+  box-shadow: 0 0 12px rgba(227, 6, 19, 0.7);
+  color: #fff1f3;
+}
+
+.journey-shop-link {
+  border: 1px solid #ffd2db;
+  background: linear-gradient(#ff9aae, #ff718d);
+  color: #29101a;
+  box-shadow: 0 4px 0 #9f3a56, 0 7px 13px rgba(0, 0, 0, 0.3);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.journey-shop-link:hover,
+.journey-shop-link:focus-visible {
+  background: linear-gradient(#ffb5c4, #ff819b);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #9f3a56, 0 9px 17px rgba(0, 0, 0, 0.35);
+}
+
+.journey-shop-link:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #9f3a56;
+}
+
+.journey-dialog {
+  animation: journeyDialogIn 250ms cubic-bezier(0.18, 0.9, 0.2, 1) both;
+}
+
+@keyframes journeyDialogIn {
+  from { opacity: 0; transform: translateY(22px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (min-width: 768px) {
+  .journey-map-stage {
+    height: clamp(620px, 58vw, 820px);
+  }
+
+  .journey-level-button {
+    left: var(--desktop-x);
+    top: var(--desktop-y);
+    width: 78px;
+    height: 78px;
+  }
+
+  .journey-level-number {
+    font-size: 29px;
+  }
+
+  .journey-level-label {
+    min-width: 106px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 380px) {
+  .journey-level-button {
+    width: 64px;
+    height: 64px;
+  }
+
+  .journey-level-number {
+    font-size: 23px;
+  }
+
+  .journey-level-label {
+    font-size: 11px;
+    min-width: 85px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-map-art,
+  .journey-level-button,
+  .journey-level-button::before,
+  .journey-trail-completed,
+  .journey-dialog,
+  .journey-shop-link {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .journey-trail-completed {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #03070a;
+}
+::-webkit-scrollbar-thumb {
+  background: #163844;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2dd4bf;
+}

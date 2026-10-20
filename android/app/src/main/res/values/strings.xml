@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">YAMATO Play &amp; Win</string>
+    <string name="title_activity_main">YAMATO Play &amp; Win</string>
+    <string name="package_name">com.yamato.urbanplay</string>
+    <string name="custom_url_scheme">com.yamato.urbanplay</string>
+</resources>
